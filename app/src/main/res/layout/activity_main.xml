@@ -36,12 +36,27 @@
         android:id="@+id/heartbeat"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Pulsas"
+
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/pressureHigh"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pressureHigh"
+        app:layout_constraintTop_toBottomOf="@+id/pressureHigh" />
+
+    <EditText
+        android:id="@+id/spo2"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="%SpO2"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/pressureLow"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pressureLow"
         app:layout_constraintTop_toBottomOf="@+id/pressureLow" />
 
     <Button
@@ -55,5 +70,12 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heartbeat" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

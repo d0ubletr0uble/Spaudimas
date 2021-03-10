@@ -45,9 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.history)
-            startActivity(new Intent(this, HistoryActivity.class));
-        else if (item.getItemId() == R.id.clear) {
+        if (item.getItemId() == R.id.history) {
+            try {
+                startActivity(new Intent(this, HistoryActivity.class));
+            } catch (Exception e) {
+                Toast.makeText(this, "KLAIDA", Toast.LENGTH_LONG).show();
+            }
+        } else if (item.getItemId() == R.id.clear) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -81,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
         String upper = ((EditText) findViewById(R.id.pressureHigh)).getText().toString();
         String lower = ((EditText) findViewById(R.id.pressureLow)).getText().toString();
         String pulse = ((EditText) findViewById(R.id.heartbeat)).getText().toString();
+        String spo2 = ((EditText) findViewById(R.id.spo2)).getText().toString();
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
         getStoragePermissions();
 
-        writeToFile(String.format("%s;%s;%s|%s|%s%s", date, time, upper, lower, pulse, System.lineSeparator()));
+        writeToFile(String.format("%s;%s;%s;%s;%s;%s%s", date, time, upper, lower, pulse, spo2, System.lineSeparator()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             FileOutputStream fos = new FileOutputStream(file, true);
             if (headerFlag)
-                fos.write("sep=;\nData;Laikas;Virsutinis|Apatinis|Pulsas\n".getBytes());
+                fos.write("sep=;\nData;Laikas;Virsutinis;Apatinis;Pulsas;%SpO2\n".getBytes());
 
             fos.write(message.getBytes());
             fos.close();

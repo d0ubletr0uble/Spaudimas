@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.ArrayAdapter;
@@ -12,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +26,13 @@ public class HistoryActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listview);
         ArrayList<String> history = readHistory();
-        String header = history.remove(0);
+        String header;
+        try {
+            header = history.remove(0);
+        } catch (Exception e) {
+            Toast.makeText(this, "KLAIDA", Toast.LENGTH_LONG).show();
+            return;
+        }
         Collections.reverse(history);
         history.add(0, header);
         listView.setAdapter(new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, history));
@@ -47,10 +50,8 @@ public class HistoryActivity extends AppCompatActivity {
                 list.add(line.replace(';',' '));
                 line = reader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Toast.makeText(this, "KLAIDA", Toast.LENGTH_LONG).show();
         }
         return list;
     }
